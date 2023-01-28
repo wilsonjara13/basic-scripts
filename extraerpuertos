@@ -1,0 +1,9 @@
+
+#Printing 
+ext1="$(grep -oP '\d{1,5}/open/tcp//\D+' | tr '///' ' ' | awk '{print $1,$4}' FS=' ' | tr ' ' '/')"
+	echo  "\n\t[*] Se han extraido estos puertos:\n"
+	echo "\t" $ext1
+
+#Copying ports to clipboard
+ext2="$(grep -oP '\d{1,5}/open' |awk '{print $1}' FS='/' | xargs | tr ' ' ',')"
+echo $ext2 | xclip -sel clip

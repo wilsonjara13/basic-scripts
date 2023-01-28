@@ -1,0 +1,2 @@
+ip=$(hostname -I)
+echo "Tu ip es: "$ip
