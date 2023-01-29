@@ -1,9 +1,10 @@
 
 #Printing 
-ext1="$(grep -oP '\d{1,5}/open/tcp//\D+' | tr '///' ' ' | awk '{print $1,$4}' FS=' ' | tr ' ' '/')"
-	echo  "\n\t[*] Se han extraido estos puertos:\n"
-	echo "\t" $ext1
+ext1="$(cat $1 | grep -oP '\d{1,5}/open/tcp//\D+' | tr '///' ' ' | awk '{print $1,$4}' FS=' ' | tr ' ' '/')";
+        echo  "\n\t[*] Se han extraido estos puertos:\n" > extraerpuertos.txt;
+        echo "\t" $ext1 >> extraerpuertos.txt;
+        cat extraerpuertos.txt;rm extraerpuertos.txt;
 
 #Copying ports to clipboard
-ext2="$(grep -oP '\d{1,5}/open' |awk '{print $1}' FS='/' | xargs | tr ' ' ',')"
-echo $ext2 | xclip -sel clip
+copying="$(cat $1 | grep -oP '\d{1,5}/open' | awk '{print $1}' FS='/' | xargs | tr ' ' ',')"
+        echo $copying | xclip -sel clip
