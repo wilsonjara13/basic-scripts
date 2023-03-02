@@ -1,10 +1,11 @@
-
-#Printing 
-ext1="$(cat $1 | grep -oP '\d{1,5}/open/tcp//\D+' | tr '///' ' ' | awk '{print $1,$4}' FS=' ' | tr ' ' '/')";
-        echo  "\n\t[*] Se han extraido estos puertos:\n" > extraerpuertos.txt;
-        echo "\t" $ext1 >> extraerpuertos.txt;
-        cat extraerpuertos.txt;rm extraerpuertos.txt;
-
 #Copying ports to clipboard
-copying="$(cat $1 | grep -oP '\d{1,5}/open' | awk '{print $1}' FS='/' | xargs | tr ' ' ',')"
-        echo $copying | xclip -sel clip
+copy1=$(cat $1 | grep -oP '\d{1,5}/open' | awk '{print $1}' FS=/ | xargs | tr " " ",")
+copy2=$(cat $1 | grep -oP '\d{1,5}/open' | awk '{print $1}' FS=/ | xargs | tr " " ",")
+
+echo "[!] Se han extraido estos puertos: $copy1"
+echo "$copy2" | xclip -sel clip
+
+#mostrar ip
+ip=$(cat $1 | grep Host | xargs | awk '{print $2}' FS=" ")
+
+echo "[!] De la IP: $ip"
