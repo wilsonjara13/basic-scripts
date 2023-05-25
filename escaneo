@@ -1,1 +1,1 @@
-arp-scan -I wlan0 --localnet
+arp-scan -I $1 --localnet
