@@ -1,6 +1,6 @@
 #!/bin/bash
 
-hosts=("192.168.1" "192.168.2")
+hosts=("$1")
 
 for host in ${hosts[@]};do
         echo -e "\n[!] Enumerating $host.0\n"
