@@ -1,0 +1,8 @@
+#!/bin/bash
+
+mkdir -p /media/decrypt
+mkdir -p /media/windows-mount
+lsblk
+read -r -p "Elige particion encriptada (/dev/<partition>): " respuesta
+dislocker $respuesta -u -- /media/decrypt
+mount /media/decrypt/dislocker-file /media/windows-mount
