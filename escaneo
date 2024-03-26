@@ -1,1 +1,26 @@
-arp-scan -I $1 --localnet
+#!/bin/bash
+
+# Obtener información de las interfaces de red y filtrar el nombre de la interfaz
+interface=$(ip a | awk -F'[:]' 'length($2) > 2 {print $2}')
+
+# Definir colores
+color_default='\033[0m'  # Color por defecto
+color_interface='\033[0;34m'  # Azul
+
+# Mostrar nombres de interfaz en color azul
+echo -e "${color_interface}Interfaz de red:${color_default}"
+echo -e "${color_interface}$interface${color_default}"
+
+# Pedir al usuario que inserte el nombre de la interfaz
+echo -n "Por favor, selecciona la interfaz de red: "
+read device
+
+# Verificar si el dispositivo está vacío o no se encuentra en la lista de interfaces
+if [ -z "$device" ] || ! echo "$interface" | grep -qw "$device"; then
+    echo "¡Error! Debes ingresar un nombre de interfaz válido."
+    exit 1
+fi
+
+# Ejecutar arp-scan con la interfaz proporcionada
+echo "Ejecutando arp-scan en la red local con la interfaz $device..."
+arp-scan -I "$device" --localnet
