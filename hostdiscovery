@@ -1,0 +1,30 @@
+#!/bin/bash
+# Función para manejar la señal SIGINT (Ctrl+C)
+cleanup() {
+    echo -e "\n\n[!] Escaneo de puertos interrumpido."
+    exit 1
+}
+
+# Establecer la función de limpieza para la señal SIGINT
+trap cleanup SIGINT
+# Verificar que se ha proporcionado al menos un argumento
+if [ $# -eq 0 ]; then
+    echo "Error: Se requiere al menos un host como argumento."
+    echo "Es un escaneo de IPs. Ejemplo:<192.168.1> <10.10.0>"
+    exit 1
+fi
+
+hosts=("$@")
+
+for host in "${hosts[@]}"; do
+    echo -e "\n[!] Enumerating $host.0\n"
+    for i in $(seq 1 254); do
+        if timeout 1 bash -c "ping -c 1 $host.$i" &> /dev/null; then
+            echo -e "\t[+] Host $host.$i - ACTIVO" &
+        fi
+        echo -ne "Procesando IP: $host.$i\r"
+    done
+    wait
+done
+
+echo -e "\n\n[!] Escaneo Finalizado."
