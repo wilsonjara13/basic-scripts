@@ -7,7 +7,6 @@ interface=$(ip a | awk -F'[:]' 'length($2) > 2 {print $2}')
 color_default='\033[0m'  # Color por defecto
 color_interface='\033[0;34m'  # Azul
 
-# Mostrar nombres de interfaz en color azul
 echo -e "${color_interface}Interfaz de red:${color_default}"
 echo -e "${color_interface}$interface${color_default}"
 
